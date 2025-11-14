@@ -1,6 +1,7 @@
 # GitHub Repo Summarizer
 
-A **lightweight Python web scraper** that fetches a GitHub repository's README and uses the **Grok API (xAI)** to generate a clean, bullet-point description of the project.
+A **lightweight Python scraper** that pulls a repo's README, asks **Grok (xAI)** to distill it into tight bullet points, and then uses that summary to discover and recommend **similar GitHub repositories** to explore.
+
 
 ### Made with **Python**, powered by **GROK**
 
@@ -10,12 +11,13 @@ A **lightweight Python web scraper** that fetches a GitHub repository's README a
 
 ## Features
 - Scrape any public GitHub repo's README
-- Summarize using Grok (`grok-4` or `grok-3`) via xAI API
+- Summarize using Grok (`grok-code-fast-1`) via xAI API
 - Returns **only** concise bullet points:
   - Project purpose
   - Tech stack
   - Key features
   - Target audience
+  - Recommends Similar Repos
 - Secrets stored securely in `.env`
 - Minimal dependencies
 
