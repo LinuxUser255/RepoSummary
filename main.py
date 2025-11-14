@@ -47,9 +47,7 @@ GPLv3
 # 1. Enter GitHub Repo -> 2. Scrape from GitHub -> 3. Save to DB
 # 4. AI Analysis -> 5. Find Similar Repos -> 6. Show Report
 
-from src.repo_scraper import get_github_repo_info
-from src.db import Database
-from src.llm import summarize_readme, find_similar_repos
+from src import Database, get_github_repo_info, summarize_readme, find_similar_repos
 
 
 def main():
