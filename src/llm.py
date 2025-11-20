@@ -29,6 +29,9 @@ def summarize_readme(readme_content: str, language: str = None) -> str:
     # Prepare the system prompt
     system_prompt = (
         "You are a concise GitHub repository summarizer. "
+        "You may be given either a README file or other repository files and directory listings.\n\n"
+        "If a README is present in the context, base your summary primarily on it. "
+        "If no README is present, analyze the provided repository contents (source files, configuration files, and directory structure) to infer the same information.\n\n"
         "Return ONLY a bullet-point list (Markdown format using '- ') that describes:\n"
         "• The main purpose of the project\n"
         "• Core technologies and programming languages used\n"
@@ -38,7 +41,9 @@ def summarize_readme(readme_content: str, language: str = None) -> str:
         "Keep it concise and factual."
     )
 
-    # Prepare user message
+
+    # Use slicing to limit the input size for Grok API to read
+    # Prepping the user message; slice the first 4000 characters for Grok API input
     user_message = f"Summarize this GitHub repository in bullet points:\n\n{readme_content[:4000]}"
 
     if language:
@@ -51,6 +56,7 @@ def summarize_readme(readme_content: str, language: str = None) -> str:
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": user_message}
             ],
+            # temp=0.3, means be mostly deterministic and focused, but allow for some variation
             temperature=0.3,
             max_tokens=500
         )

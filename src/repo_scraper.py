@@ -1,20 +1,4 @@
-# This file is primarily responsible for scraping the GitHub repository README
-# This is where the oxylabs webscraper API logic will go in the future
-# for my purposes, much of the current main.py code go here
-# this file is doing the searching and scraping
-# gathering related repos will be in here too
-import os
-# need to import the Grok API
-import json
-import os
-import time
-from unicodedata import category
-
-import requests
-from certifi import contents
 from dotenv import load_dotenv
-# import the BeautifulSoup library for parsing HTML
-from bs4 import BeautifulSoup
 import requests
 import base64
 
@@ -104,9 +88,3 @@ def get_github_repo_info(owner: str, repo: str, ref: str = None) -> dict:
         readme_content = "No README found."
 
     return {"language": language, "readme": readme_content}
-
-#info = get_github_repo_info("tiangolo", "fastapi")
-#    print(f"Language: {info['language']}")  # Output: Language: Python
-#    print(f"README preview: {info['readme'][:200]}...")
-
-
