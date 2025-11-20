@@ -1,4 +1,5 @@
 from tinydb import TinyDB, Query
+from tinydb.storages import JSONStorage
 from datetime import datetime
 import os
 
@@ -7,11 +8,12 @@ class Database:
         dirname = os.path.dirname(db_path)
         if dirname:
             os.makedirs(dirname, exist_ok=True)
-        self.db = TinyDB(db_path)
+        # Use JSONStorage with indent parameter for pretty formatting
+        self.db = TinyDB(db_path, indent=4, ensure_ascii=False)
         self.repos = self.db.table("repositories")
 
-    def save_repo(self, owner, repo_name, language, readme, summary):
-        """Save repo info and summary to database"""
+    def save_repo(self, owner, repo_name, language, readme, summary, similar_repos=None):
+        """Save repo info, summary, and similar repos to database"""
         repo_key = f"{owner}/{repo_name}"
         self.repos.insert({
             'repo': repo_key,
@@ -20,6 +22,7 @@ class Database:
             'language': language,
             'readme': readme[:500],  # Store first 500 chars
             'summary': summary,
+            'similar_repos': similar_repos or [],  # Store list of similar repos
             'timestamp': datetime.now().isoformat()
         })
         print(f"Saved {repo_key} to database")

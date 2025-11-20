@@ -91,18 +91,18 @@ def main():
         return
     print("  ✓ Summary generated")
 
-    # Step 4: Save to DB
-    print(f"\n[3/5] Saving to database...")
-    db.save_repo(owner, repo_name, language, readme, summary)
-    print("  ✓ Saved")
-
-    # Step 5: Find Similar Repos
-    print(f"\n[4/5] Finding similar repositories...")
+    # Step 4: Find Similar Repos (before saving to DB)
+    print(f"\n[3/5] Finding similar repositories...")
     similar_repos = find_similar_repos(summary, language)
     if similar_repos:
         print(f"  ✓ Found {len(similar_repos)} similar repos")
     else:
         print("  ! No similar repos found")
+
+    # Step 5: Save to DB (now includes similar repos)
+    print(f"\n[4/5] Saving to database...")
+    db.save_repo(owner, repo_name, language, readme, summary, similar_repos)
+    print("  ✓ Saved")
 
     # Step 6: Show Report
     print(f"\n[5/5] " + "=" * 60)
